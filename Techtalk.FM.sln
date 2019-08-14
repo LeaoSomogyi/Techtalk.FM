@@ -3,19 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Techtalk.FM.API", "Techtalk.FM.API\Techtalk.FM.API.csproj", "{BE9DA3FB-846C-4023-9DBB-5330A1766A63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Techtalk.FM.API", "src\Techtalk.FM.API\Techtalk.FM.API.csproj", "{BE9DA3FB-846C-4023-9DBB-5330A1766A63}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{735A74DB-6D27-4F1D-9B72-59EE77ED895C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_solution items", "_solution items", "{0CF957FA-6D08-4EB8-A3AA-1B9D4703E91C}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7BB64CAF-F556-465A-B5F5-2EFD08BB60A3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Techtalk.FM.Domain", "Techtalk.FM.Domain\Techtalk.FM.Domain.csproj", "{DB1DDC34-EA26-417D-BF18-18B4D8071F84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Techtalk.FM.Domain", "src\Techtalk.FM.Domain\Techtalk.FM.Domain.csproj", "{DB1DDC34-EA26-417D-BF18-18B4D8071F84}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Techtalk.FM.Infra", "Techtalk.FM.Infra\Techtalk.FM.Infra.csproj", "{19037756-1706-4ABB-B915-7447378315C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Techtalk.FM.Infra", "src\Techtalk.FM.Infra\Techtalk.FM.Infra.csproj", "{19037756-1706-4ABB-B915-7447378315C8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Techtalk.FM.Test", "Techtalk.FM.Test\Techtalk.FM.Test.csproj", "{9DDAB0C0-41B1-44FF-A594-4FE84B2E1E34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Techtalk.FM.Test", "test\Techtalk.FM.Test\Techtalk.FM.Test.csproj", "{9DDAB0C0-41B1-44FF-A594-4FE84B2E1E34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
