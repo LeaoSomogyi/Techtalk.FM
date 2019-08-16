@@ -27,6 +27,9 @@ namespace Techtalk.FM.Domain.DTOs.Validators
 
             RuleFor(x => x.Email).Must(predicate: (user, email) =>
             {
+                if (email == null)
+                    return false;
+
                 Match match = Regex.Match(email, @"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$", RegexOptions.IgnoreCase);
 
                 return match.Success;

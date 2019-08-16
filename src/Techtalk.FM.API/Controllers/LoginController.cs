@@ -24,25 +24,7 @@ namespace Techtalk.FM.API.Controllers
         [Route("")]
         public async Task<IActionResult> Login(DTO.User user)
         {
-            try
-            {
-                DTO.Token token = await _loginService.Authenticate(new Entities.User(user));
-
-                if (token == null)
-                {
-                    return BadRequest(new
-                    {
-                        type = "ERROR",
-                        message = "Usuário ou senha incorretos."
-                    });
-                }
-                else
-                    return Ok(token);
-            }
-            catch (Exception ex)
-            {
-                return new UnprocessableEntityObjectResult(ex.Message);
-            }
+            return Ok(await _loginService.Authenticate(new Entities.User(user)));
         }
     }
 }

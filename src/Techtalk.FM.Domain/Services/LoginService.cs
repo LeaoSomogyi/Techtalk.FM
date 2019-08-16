@@ -79,7 +79,7 @@ namespace Techtalk.FM.Domain.Services
             }
             else
             {
-                return null;
+                throw new ArgumentException("Usuário ou senha inválidos.");
             }
         }
 

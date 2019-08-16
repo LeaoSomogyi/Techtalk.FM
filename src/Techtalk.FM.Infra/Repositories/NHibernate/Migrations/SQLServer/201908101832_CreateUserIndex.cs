@@ -9,9 +9,9 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations.SQLServer
     {
         public override void Up()
         {
-            Create.Index("ix_users_email_password").OnTable("users")
+            Create.Index("ix_admin_user_email_password").OnTable("admin_user")
                 .OnColumn("email").Ascending()
-                .OnColumn("password").Ascending()
+                .OnColumn("user_password").Ascending()
 
             .WithOptions().NonClustered()
                 .Include("id")
@@ -22,7 +22,7 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations.SQLServer
 
         public override void Down()
         {
-            Delete.Index("ix_users_email_password").OnTable("users");
+            Delete.Index("ix_admin_user_email_password").OnTable("admin_user");
         }
     }
 }

@@ -23,7 +23,8 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations
         {
             _configuration = configuration;
             _tag = _configuration.GetSection("Migration")["TagName"];
-            _migrationContext = new BaseMigrationContext(configuration.GetConnectionString("TechtalkConn"));
+            _migrationContext = new BaseMigrationContext(configuration.GetConnectionString("TechtalkConn"), 
+                configuration.GetSection("Provider")["ProviderName"]);
         }
 
         #endregion
@@ -92,7 +93,7 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations
             ServiceProvider service = new ServiceCollection()
                             .AddFluentMigratorCore()
                             .ConfigureRunner(r => r
-                                .AddPostgres()
+                                .GetDatabase(context)
                                 .WithGlobalConnectionString(context.ConnectionString)
                                 .WithMigrationsIn(typeof(BaseMigrationContext).Assembly)
                                 .WithVersionTable(new VersionTable(_configuration))

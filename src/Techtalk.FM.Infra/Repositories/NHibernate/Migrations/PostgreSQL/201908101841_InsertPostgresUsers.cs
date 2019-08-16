@@ -10,12 +10,12 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations.PostgreSQL
     {
         public override void Up()
         {
-            Insert.IntoTable("user").Row(new
+            Insert.IntoTable("admin_user").Row(new
             {
                 id = Guid.NewGuid(),
                 name = "Postgres User",
                 email = "postgres@db.com",
-                password = "Postgres@2019".Cript(),
+                user_password = "Postgres@2019".Cript(),
                 created_at = DateTime.Now,
                 updated_at = DateTime.Now
             });

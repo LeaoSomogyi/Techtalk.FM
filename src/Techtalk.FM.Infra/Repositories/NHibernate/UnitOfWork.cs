@@ -8,20 +8,17 @@ using Techtalk.FM.Domain.Contracts.Repositories;
 namespace Techtalk.FM.Infra.Repositories.NHibernate
 {
     public class UnitOfWork : IUnitOfWork
-    {
-        private readonly IServiceProvider _serviceProvider;
+    {   
         private bool _disposed { get; set; }
         private NHContext _context { get; set; }
         private ISession _session { get; set; }
         private ITransaction _transaction { get; set; }
 
-        public UnitOfWork(IServiceProvider serviceProvider, IConfiguration configuration)
+        public UnitOfWork(IConfiguration configuration)
         {
             string conn = configuration.GetConnectionString("TechtalkConn");
             string schema = configuration.GetSection("Provider")["DefaultSchema"];
             string provider = configuration.GetSection("Provider")["ProviderName"];
-
-            _serviceProvider = serviceProvider;
 
             _context = new NHContext(conn, schema, provider);
         }

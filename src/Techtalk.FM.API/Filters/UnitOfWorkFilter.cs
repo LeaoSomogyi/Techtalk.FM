@@ -2,7 +2,7 @@
 using NHibernate;
 using System.Threading.Tasks;
 
-namespace Techtalk.FM.API
+namespace Techtalk.FM.API.Filters
 {
     public class UnitOfWorkFilter : IAsyncActionFilter
     {

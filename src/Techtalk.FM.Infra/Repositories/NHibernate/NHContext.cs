@@ -15,7 +15,7 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate
     {
         private List<Type> _mappings = new List<Type>();
 
-        private string _connStringName { get; set; }
+        private string _connString { get; set; }
 
         private string _defaultSchema { get; set; }
 
@@ -29,7 +29,7 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate
 
         public NHContext(string connStringName, string defaultSchema, string providerName)
         {
-            _connStringName = connStringName;
+            _connString = connStringName;
             _defaultSchema = defaultSchema;
             _providerName = providerName;
 
@@ -78,25 +78,32 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate
             {
                 case "postgresql":
                     PostgreSQLConfiguration postgreSQLConfig = PostgreSQLConfiguration.PostgreSQL82
-                        .ConnectionString(_connStringName)
+                        .ConnectionString(_connString)
                         .DefaultSchema(_defaultSchema);
 
                     return postgreSQLConfig;
 
                 case "sqlserver":
                     MsSqlConfiguration sqlServerConfig = MsSqlConfiguration.MsSql2012
-                       .ConnectionString(_connStringName)
+                       .ConnectionString(_connString)
                        .DefaultSchema(_defaultSchema);
 
                     return sqlServerConfig;
 
-                case "sqllite":
+                case "sqlite":
                     SQLiteConfiguration sqLiteConfig = SQLiteConfiguration.Standard
-                       .ConnectionString(_connStringName)
+                       .ConnectionString(_connString)
                        .InMemory()
                        .DefaultSchema(_defaultSchema);
 
                     return sqLiteConfig;
+
+                case "firebird":
+                    FirebirdConfiguration firebirdConfig = new FirebirdConfiguration()
+                        .ConnectionString(_connString)
+                        .DefaultSchema(_defaultSchema);
+
+                    return firebirdConfig;
 
                 default:
                     throw new ArgumentException("Unable to define database provider");

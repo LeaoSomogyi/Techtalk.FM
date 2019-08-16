@@ -9,12 +9,12 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations
     {
         public override void Up()
         {
-            Insert.IntoTable("user").Row(new
+            Insert.IntoTable("admin_user").Row(new
             {
                 id = Guid.NewGuid(),
                 name = "Felipe Somogyi",
                 email = "felipe.somogyi@rakuten.com.br",
-                password = "12345678".Cript(),
+                user_password = "12345678".Cript(),
                 created_at = DateTime.Now,
                 updated_at = DateTime.Now
             });

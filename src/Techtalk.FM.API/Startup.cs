@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -15,10 +16,12 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Techtalk.FM.API.Filters;
 using Techtalk.FM.Domain.Configurations;
 using Techtalk.FM.Domain.Contracts.Migrations;
 using Techtalk.FM.Domain.Contracts.Repositories;
 using Techtalk.FM.Domain.Contracts.Services;
+using Techtalk.FM.Domain.DTOs.Validators;
 using Techtalk.FM.Domain.Services;
 using Techtalk.FM.Infra.Repositories.NHibernate;
 using Techtalk.FM.Infra.Repositories.NHibernate.Migrations;
@@ -58,7 +61,8 @@ namespace Techtalk.FM.API
                     opt.SerializerSettings.FloatParseHandling = FloatParseHandling.Double;
                     opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     opt.SerializerSettings.TypeNameHandling = TypeNameHandling.None;
-                });
+                })
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<UserValidator>()); ;
 
             #endregion
 
@@ -95,7 +99,18 @@ namespace Techtalk.FM.API
 
             services.Configure<MvcOptions>(options =>
             {
-                options.Filters.AddService<UnitOfWorkFilter>(2);
+                options.Filters.AddService<UnitOfWorkFilter>(1);
+            });
+
+            #endregion
+
+            #region "  Configure API Result  "
+
+            services.AddScoped(typeof(APIResultFilter));
+
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.AddService<APIResultFilter>(2);
             });
 
             #endregion
