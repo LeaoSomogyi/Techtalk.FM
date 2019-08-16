@@ -20,11 +20,11 @@ namespace Techtalk.FM.Test.Utils
 
         public TestServerFixture()
         {
-            IConfiguration configuration = ConfigurationHelper.GetIConfigurationRoot(Environment.CurrentDirectory);
+            var configuration = ConfigurationHelper.GetIConfigurationRoot(Environment.CurrentDirectory);
 
             new MigrationHelper(configuration).RunMigrationDown();
 
-            IWebHostBuilder builder = Program.CreateWebHostBuilder(new string[0])
+            var builder = Program.CreateWebHostBuilder(new string[0])
                 .ConfigureTestServices((IServiceCollection services) => 
                 {
                     services.AddSingleton<IUnitOfWork, UnitOfWork>();

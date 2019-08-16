@@ -16,7 +16,7 @@ namespace Techtalk.FM.Domain.Extensions
             if (string.IsNullOrEmpty(password))
                 return password;
 
-            UnicodeEncoding encoding = new UnicodeEncoding();
+            var encoding = new UnicodeEncoding();
 
             byte[] hashBytes;
 

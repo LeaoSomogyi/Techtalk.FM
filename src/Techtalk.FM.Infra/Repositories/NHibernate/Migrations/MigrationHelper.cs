@@ -37,7 +37,7 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations
         public void RunMigrationUp()
         {
             //Configure Migration Runner                
-            ServiceProvider service = CreateService(_migrationContext);
+            var service = CreateService(_migrationContext);
 
             using (IServiceScope scope = service.CreateScope())
             {
@@ -51,7 +51,7 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations
         public void RunMigrationDown()
         {
             //Configure Migration Runner
-            ServiceProvider service = CreateService(_migrationContext);
+            var service = CreateService(_migrationContext);
 
             using (IServiceScope scope = service.CreateScope())
             {
@@ -69,7 +69,7 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations
         /// <param name="serviceProvider">IServiceProvider injector</param>
         private static void UpdateDatabase(IServiceProvider serviceProvider)
         {
-            IMigrationRunner runner = serviceProvider.GetRequiredService<IMigrationRunner>();
+            var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
             runner.MigrateUp();
         }
 
@@ -79,7 +79,7 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations
         /// <param name="serviceProvider">IServiceProvider injector</param>
         private static void DownDatabase(IServiceProvider serviceProvider)
         {
-            IMigrationRunner runner = serviceProvider.GetRequiredService<IMigrationRunner>();
+            var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
             runner.MigrateDown(0);
         }
 
@@ -90,7 +90,7 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations
         /// <returns>ServiceProvider</returns>
         private ServiceProvider CreateService(BaseMigrationContext context)
         {
-            ServiceProvider service = new ServiceCollection()
+            var service = new ServiceCollection()
                             .AddFluentMigratorCore()
                             .ConfigureRunner(r => r
                                 .GetDatabase(context)

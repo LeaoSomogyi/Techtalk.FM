@@ -11,7 +11,7 @@ namespace Techtalk.FM.Domain.Configurations
 
         public SigningConfigurations()
         {
-            using (RSACryptoServiceProvider provider = new RSACryptoServiceProvider(2048))
+            using (var provider = new RSACryptoServiceProvider(2048))
             {
                 SecurityKey = new RsaSecurityKey(provider.ExportParameters(true));
             }

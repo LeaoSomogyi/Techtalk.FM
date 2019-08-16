@@ -22,7 +22,7 @@ namespace Techtalk.FM.API.Filters
         /// <returns>A System.Threading.Tasks.Task that on completion indicates the filter has executed.</returns>
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            ActionExecutedContext executedContext = await next();
+            var executedContext = await next();
 
             if (executedContext.Exception == null)
             {

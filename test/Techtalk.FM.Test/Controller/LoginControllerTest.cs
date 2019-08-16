@@ -25,9 +25,9 @@ namespace Techtalk.FM.Test.Controller
         [Fact]
         public async Task Login_Ok()
         {
-            DTO.User user = new DTO.User() { Email = "felipe.somogyi@rakuten.com.br", Password = "12345678" };
+            var user = new DTO.User() { Email = "felipe.somogyi@rakuten.com.br", Password = "12345678" };
 
-            HttpResponseMessage response = await DoLogin(user);
+            var response = await DoLogin(user);
 
             response.EnsureSuccessStatusCode();
 
@@ -61,9 +61,19 @@ namespace Techtalk.FM.Test.Controller
         [Fact]
         public async Task Login_NOk()
         {
-            DTO.User user = new DTO.User() { Email = "abobrinha@lala.com", Password = "123456" };
+            var user = new DTO.User() { Email = "abobrinha@lala.com", Password = "123456" };
 
-            HttpResponseMessage response = await DoLogin(user);
+            var response = await DoLogin(user);
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task Login_Invalid_Email()
+        {
+            var user = new DTO.User() { Email = "lalala" };
+
+            var response = await DoLogin(user);
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
@@ -79,7 +89,7 @@ namespace Techtalk.FM.Test.Controller
         /// <returns>HttpResponseMessage</returns>
         private async Task<HttpResponseMessage> DoLogin(DTO.User user)
         {
-            StringContent payload = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+            var payload = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
 
             return await _fixture.HttpClient.PostAsync("api/login", payload);
         }

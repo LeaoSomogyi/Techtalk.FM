@@ -17,7 +17,7 @@ namespace Techtalk.FM.API.Filters
         /// <returns>A System.Threading.Tasks.Task that on completion indicates the filter has executed.</returns>
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            ActionExecutedContext executedContext = await next();
+            var executedContext = await next();
 
             if (executedContext.Exception == null)
             {
@@ -33,7 +33,7 @@ namespace Techtalk.FM.API.Filters
                         executedContext.HttpContext.Items.Add("IsHandledError", true);
                     }
 
-                    BadRequestObjectResult result = new BadRequestObjectResult(arg.Message)
+                    var result = new BadRequestObjectResult(arg.Message)
                     {
                         StatusCode = StatusCodes.Status400BadRequest
                     };
@@ -49,7 +49,7 @@ namespace Techtalk.FM.API.Filters
                         executedContext.HttpContext.Items.Add("IsHandledError", false);
                     }
 
-                    JsonResult result = new JsonResult(ex.Message)
+                    var result = new JsonResult(ex.Message)
                     {
                         StatusCode = StatusCodes.Status500InternalServerError
                     };

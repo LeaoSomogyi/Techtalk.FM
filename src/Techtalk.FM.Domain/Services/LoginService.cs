@@ -39,11 +39,11 @@ namespace Techtalk.FM.Domain.Services
 
         public async Task<Token> Authenticate(Entities.User user)
         {
-            Entities.User _user = await _userRepository.LoginSearch(user.Email, user.Password.Cript());
+            var _user = await _userRepository.LoginSearch(user.Email, user.Password.Cript());
 
             if (_user != null)
             {
-                ClaimsIdentity identity = new ClaimsIdentity(
+                var identity = new ClaimsIdentity(
                     new GenericIdentity(_user.Id.ToString(), "Login"),
                     new List<Claim>()
                     {
@@ -55,9 +55,9 @@ namespace Techtalk.FM.Domain.Services
                 DateTime createdAt = DateTime.Now;
                 DateTime expiresAt = createdAt.AddSeconds(_tokenConfigurations.Seconds);
 
-                JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+                var handler = new JwtSecurityTokenHandler();
 
-                SecurityToken securityToken = handler.CreateToken(new SecurityTokenDescriptor()
+                var securityToken = handler.CreateToken(new SecurityTokenDescriptor()
                 {
                     Issuer = null,
                     Audience = null,

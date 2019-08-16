@@ -51,6 +51,7 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate
         public void LoadMappings()
         {
             Add<UserMap>();
+            Add<BookMap>();
         }
 
         public ISessionFactory Configure()
@@ -77,21 +78,21 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate
             switch (_providerName)
             {
                 case "postgresql":
-                    PostgreSQLConfiguration postgreSQLConfig = PostgreSQLConfiguration.PostgreSQL82
+                    var postgreSQLConfig = PostgreSQLConfiguration.PostgreSQL82
                         .ConnectionString(_connString)
                         .DefaultSchema(_defaultSchema);
 
                     return postgreSQLConfig;
 
                 case "sqlserver":
-                    MsSqlConfiguration sqlServerConfig = MsSqlConfiguration.MsSql2012
+                    var sqlServerConfig = MsSqlConfiguration.MsSql2012
                        .ConnectionString(_connString)
                        .DefaultSchema(_defaultSchema);
 
                     return sqlServerConfig;
 
                 case "sqlite":
-                    SQLiteConfiguration sqLiteConfig = SQLiteConfiguration.Standard
+                    var sqLiteConfig = SQLiteConfiguration.Standard
                        .ConnectionString(_connString)
                        .InMemory()
                        .DefaultSchema(_defaultSchema);
@@ -99,7 +100,7 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate
                     return sqLiteConfig;
 
                 case "firebird":
-                    FirebirdConfiguration firebirdConfig = new FirebirdConfiguration()
+                    var firebirdConfig = new FirebirdConfiguration()
                         .ConnectionString(_connString)
                         .DefaultSchema(_defaultSchema);
 

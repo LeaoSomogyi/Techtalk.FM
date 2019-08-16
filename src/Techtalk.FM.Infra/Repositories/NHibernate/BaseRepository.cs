@@ -37,7 +37,7 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate
         {
             try
             {
-                object added = await Session.SaveAsync(entity);
+                var added = await Session.SaveAsync(entity);
                 return await Session.GetAsync(entity.GetType(), added) as T;
             }
             catch
@@ -70,7 +70,7 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate
         {
             try
             {
-                T entity = await GetAsync(id);
+                var entity = await GetAsync(id);
 
                 await DeleteAsync(entity);
             }
@@ -89,7 +89,7 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate
         {
             try
             {
-                T result = await Session.CreateCriteria<T>()
+                var result = await Session.CreateCriteria<T>()
                     .Add(Restrictions.Eq("Id", id))
                     .UniqueResultAsync<T>();
 
