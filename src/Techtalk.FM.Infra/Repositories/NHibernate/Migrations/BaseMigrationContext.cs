@@ -1,5 +1,8 @@
 ﻿namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations
 {
+    /// <summary>
+    /// Migration Context to be used when Migrate Database
+    /// </summary>
     public class BaseMigrationContext
     {
         /// <summary>

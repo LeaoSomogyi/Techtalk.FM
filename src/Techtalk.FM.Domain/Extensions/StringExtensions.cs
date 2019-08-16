@@ -9,8 +9,8 @@ namespace Techtalk.FM.Domain.Extensions
         /// <summary>
         /// Encript string using hashbytes
         /// </summary>
-        /// <param name="password">Password not cripted</param>
-        /// <returns>The password cript in hashbytes</returns>
+        /// <param name="password">string not cripted</param>
+        /// <returns>The current string cript in hashbytes</returns>
         public static string Cript(this string password)
         {
             if (string.IsNullOrEmpty(password))

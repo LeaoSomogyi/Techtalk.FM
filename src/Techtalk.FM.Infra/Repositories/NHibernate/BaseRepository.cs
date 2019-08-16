@@ -7,10 +7,17 @@ using Techtalk.FM.Domain.Contracts.Repositories;
 
 namespace Techtalk.FM.Infra.Repositories.NHibernate
 {
+    /// <summary>
+    /// Base Repository with common operations
+    /// </summary>
+    /// <typeparam name="T">Mapped Class</typeparam>
     public abstract class BaseRepository<T> : IRepository<T> where T : class, IEntity
     {
         #region "  Properties  "
 
+        /// <summary>
+        /// NHibernate Session
+        /// </summary>
         protected ISession Session { get; set; }
 
         #endregion

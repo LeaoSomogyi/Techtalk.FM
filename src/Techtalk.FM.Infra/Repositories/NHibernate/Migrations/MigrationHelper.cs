@@ -7,13 +7,16 @@ using Techtalk.FM.Domain.Contracts.Migrations;
 
 namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations
 {
+    /// <summary>
+    /// Responsible to concentrate Migration operations
+    /// </summary>
     public class MigrationHelper : IMigrationHelper
     {
         #region "  Properties  "
 
-        private string _tag;
-        private IConfiguration _configuration;
-        private BaseMigrationContext _migrationContext;
+        private readonly string _tag;
+        private readonly IConfiguration _configuration;
+        private readonly BaseMigrationContext _migrationContext;
 
         #endregion
 

@@ -3,6 +3,10 @@ using System.Threading.Tasks;
 
 namespace Techtalk.FM.Domain.Contracts.Repositories
 {
+    /// <summary>
+    /// Base repository with Common operations
+    /// </summary>
+    /// <typeparam name="T">Mapped Class</typeparam>
     public interface IRepository<T> where T : class
     {
         /// <summary>

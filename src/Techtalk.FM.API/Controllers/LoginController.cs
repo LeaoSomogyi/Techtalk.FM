@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 using Techtalk.FM.Domain.Contracts.Services;
 using DTO = Techtalk.FM.Domain.DTOs;

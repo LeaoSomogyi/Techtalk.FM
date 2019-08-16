@@ -3,10 +3,19 @@ using System.Security.Cryptography;
 
 namespace Techtalk.FM.Domain.Configurations
 {
+    /// <summary>
+    /// Define Sign In SecurityKey and Credentials
+    /// </summary>
     public class SigningConfigurations
     {
+        /// <summary>
+        /// Rsa Security Key
+        /// </summary>
         public SecurityKey SecurityKey { get; set; }
 
+        /// <summary>
+        /// RsaSha 256 Signature Credentials
+        /// </summary>
         public SigningCredentials SigningCredentials { get; set; }
 
         public SigningConfigurations()

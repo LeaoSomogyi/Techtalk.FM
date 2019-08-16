@@ -3,6 +3,9 @@ using System;
 
 namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations
 {
+    /// <summary>
+    /// Utils Migration Extensions
+    /// </summary>
     public static class MigrationExtensions
     {
         /// <summary>
