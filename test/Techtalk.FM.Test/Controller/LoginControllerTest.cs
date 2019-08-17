@@ -14,12 +14,20 @@ namespace Techtalk.FM.Test.Controller
     [ExcludeFromCodeCoverage]
     public class LoginControllerTest : IClassFixture<TestServerFixture>
     {
+        #region "  Properties  "
+
         private readonly TestServerFixture _fixture;
+
+        #endregion
+
+        #region "  Constructors  "
 
         public LoginControllerTest(TestServerFixture fixture)
         {
             _fixture = fixture;
         }
+
+        #endregion
 
         #region "  Ok  "
 
@@ -53,13 +61,13 @@ namespace Techtalk.FM.Test.Controller
         #region "  Private Methods  "
 
         /// <summary>
-        /// Method to do the Login request
+        /// Method to do the Login Request POST api/login
         /// </summary>
         /// <param name="user">User DTO</param>
         /// <returns>HttpResponseMessage</returns>
         private async Task<HttpResponseMessage> DoLogin(DTO.User user)
         {
-            var payload = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+            var payload = new StringContent(JsonConvert.SerializeObject(user, _fixture.SerializerSettings), Encoding.UTF8, "application/json");
 
             return await _fixture.HttpClient.PostAsync("api/login", payload);
         }

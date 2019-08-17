@@ -1,0 +1,176 @@
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using Techtalk.FM.Test.Utils;
+using Xunit;
+using DTO = Techtalk.FM.Domain.DTOs;
+
+namespace Techtalk.FM.Test.Controller
+{
+    [ExcludeFromCodeCoverage]
+    public class BookControllerTest : IClassFixture<TestServerFixture>
+    {
+        #region "  Properties  "
+
+        private readonly TestServerFixture _fixture;
+
+        #endregion
+
+        #region "  Constructors  "
+
+        public BookControllerTest(TestServerFixture fixture)
+        {
+            _fixture = fixture;
+        }
+
+        #endregion
+
+        #region "  Ok  "
+
+        [Fact]
+        public async Task Save_Book_Ok()
+        {
+            var response = await SaveBook();
+
+            response.EnsureSuccessStatusCode();
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task Get_Book_Ok()
+        {
+            var task = Record.ExceptionAsync(async () => 
+            {
+                var book = await SaveAndReturnBook();
+
+                //Call GET - api/book/{id}
+                var response = await _fixture.HttpClient.GetAsync($"api/book/{book.Id}");
+
+                //Convert HttpContent to string
+                var content = await response.Content.ReadAsStringAsync();
+
+                var json = JObject.Parse(content);
+
+                //After parse to json, convert do DTO Book
+                var _book = JsonConvert.DeserializeObject<DTO.Book>(json["value"].ToString(), _fixture.SerializerSettings);
+
+                Assert.Equal(book.Id, _book.Id);
+            });
+
+            var ex = await task;
+
+            Assert.True(ex == null);
+        }
+
+        [Fact]
+        public async Task Delete_Book_Ok()
+        {
+            var book = await SaveAndReturnBook();
+
+            //Call DELETE - api/book/{id}
+            var response = await _fixture.HttpClient.DeleteAsync($"api/book/{book.Id}");
+
+            response.EnsureSuccessStatusCode();
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        #endregion
+
+        #region "  NOk  "
+
+
+
+        #endregion
+
+        #region "  Private Methods  "
+
+        /// <summary>
+        /// Get Book DTO
+        /// </summary>
+        /// <returns>Book DTO</returns>
+        private DTO.Book GetBook()
+        {
+            return new DTO.Book()
+            {
+                Title = "The Witcher - A Torre da Andorinha",
+                Subtitle = "A Saga do bruxo Geralt de Rívia",
+                Author = "Andrzej Sapkowski",
+                PublishDate = DateTime.Now,
+                ISBN = "9788546900978",
+                PageNumber = 456,
+                PublishingHouse = "WMF Martins Fontes"
+            };
+        }
+
+        /// <summary>
+        /// Method to do the Save Request POST - api/book
+        /// </summary>
+        /// <returns>HttpResponseMessage</returns>
+        private async Task<HttpResponseMessage> SaveBook()
+        {
+            var token = await GetToken();
+
+            var client = _fixture.SetRequestAuthorization(token.AccessToken);
+
+            var payload = new StringContent(JsonConvert.SerializeObject(GetBook(), _fixture.SerializerSettings), Encoding.UTF8, "application/json");
+
+            return await client.PostAsync("api/book", payload);
+        }
+
+        /// <summary>
+        /// Save Book and return it
+        /// </summary>
+        /// <returns>DTO Book</returns>
+        private async Task<DTO.Book> SaveAndReturnBook()
+        {
+            var response = await SaveBook();
+
+            response.EnsureSuccessStatusCode();
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+            //Convert HttpContent to string
+            var content = await response.Content.ReadAsStringAsync();
+
+            var json = JObject.Parse(content);
+
+            return JsonConvert.DeserializeObject<DTO.Book>(json["value"].ToString(), _fixture.SerializerSettings);
+        }
+
+        /// <summary>
+        /// Get Access Token from POST - api/login
+        /// </summary>
+        /// <returns>DTO Token</returns>
+        private async Task<DTO.Token> GetToken()
+        {
+            var _user = new DTO.User() { Email = "felipe.somogyi@rakuten.com.br", Password = "12345678" };
+
+            var user = new StringContent(JsonConvert.SerializeObject(_user, _fixture.SerializerSettings), Encoding.UTF8, "application/json");
+
+            var response = await _fixture.HttpClient.PostAsync("api/login", user);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            var json = JObject.Parse(content);
+
+            return JsonConvert.DeserializeObject<DTO.Token>(json["value"].ToString(), _fixture.SerializerSettings);
+        }
+
+        #endregion
+
+        #region "  Theory  "
+
+
+
+        #endregion
+    }
+}

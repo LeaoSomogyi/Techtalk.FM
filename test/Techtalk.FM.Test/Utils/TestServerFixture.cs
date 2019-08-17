@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Net.Http;
 using Techtalk.FM.API;
@@ -15,6 +17,8 @@ namespace Techtalk.FM.Test.Utils
     /// </summary>
     public class TestServerFixture : IDisposable
     {
+        #region "  Properties  "
+
         /// <summary>
         /// TestServer created by Startup.cs
         /// </summary>
@@ -25,11 +29,29 @@ namespace Techtalk.FM.Test.Utils
         /// </summary>
         public HttpClient HttpClient { get; private set; }
 
+        /// <summary>
+        /// Json Serializer options adding SnakeCaseNamingStrategy
+        /// </summary>
+        public JsonSerializerSettings SerializerSettings
+        {
+            get
+            {
+                return new JsonSerializerSettings()
+                {
+                    ContractResolver = new DefaultContractResolver { NamingStrategy = new SnakeCaseNamingStrategy() },
+                    DateFormatString = "yyyy-MM-ddTHH:mm:ss",
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
+            }
+        }
+
+        #endregion
+
+        #region "  Constructors  "
+
         public TestServerFixture()
         {
             var configuration = ConfigurationHelper.GetIConfigurationRoot(Environment.CurrentDirectory);
-
-            new MigrationHelper(configuration).RunMigrationDown();
 
             var builder = Program.CreateWebHostBuilder(new string[0])
                 .ConfigureTestServices((IServiceCollection services) =>
@@ -43,10 +65,30 @@ namespace Techtalk.FM.Test.Utils
             HttpClient = Server.CreateClient();
         }
 
+        #endregion
+
+        #region "  Public Methods  "
+
+        public HttpClient SetRequestAuthorization(string token)
+        {
+            if (!HttpClient.DefaultRequestHeaders.Contains("Authorization"))
+            {
+                HttpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+            }            
+
+            return HttpClient;
+        }
+
+        #endregion
+
+        #region "  IDisposable  "
+
         public void Dispose()
         {
             Server.Dispose();
             HttpClient.Dispose();
         }
+
+        #endregion
     }
 }

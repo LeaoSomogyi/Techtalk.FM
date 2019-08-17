@@ -20,10 +20,10 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations.Common
                 .WithColumn("updated_at").AsDateTime().NotNullable();
 
             IfDatabase("SqlServer", "Postgres")
-                .Create.Column("id").OnTable("admin_user").AsGuid().PrimaryKey();
+                .Create.Column("id").OnTable("book").AsGuid().PrimaryKey();
 
             IfDatabase("Firebird")
-                .Create.Column("id").OnTable("admin_user").AsString(38).PrimaryKey();
+                .Create.Column("id").OnTable("book").AsString(38).PrimaryKey();
         }
     }
 }
