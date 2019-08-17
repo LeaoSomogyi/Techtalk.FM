@@ -14,11 +14,8 @@ using Techtalk.FM.API.Filters;
 using Techtalk.FM.Domain.Configurations;
 using Techtalk.FM.Domain.Contracts.Migrations;
 using Techtalk.FM.Domain.Contracts.Repositories;
-using Techtalk.FM.Domain.Contracts.Services;
 using Techtalk.FM.Domain.DTOs.Validators;
-using Techtalk.FM.Domain.Services;
-using Techtalk.FM.Infra.Repositories.NHibernate;
-using Techtalk.FM.Infra.Repositories.NHibernate.Migrations;
+using Techtalk.FM.IoC;
 
 namespace Techtalk.FM.API
 {
@@ -62,11 +59,7 @@ namespace Techtalk.FM.API
 
             #region "  Configure Dependency Injection  "
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IMigrationHelper, MigrationHelper>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IBookRepository, BookRepository>();
-            services.AddScoped<ILoginService, LoginService>();
+            InjectorBootStrapper.RegisterServices(services);
 
             var tokenConfig = new TokenConfigurations();
             Configuration.Bind("TokenConfigurations", tokenConfig);

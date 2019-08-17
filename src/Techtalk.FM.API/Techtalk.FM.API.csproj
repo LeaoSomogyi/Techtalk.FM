@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Techtalk.FM.Domain\Techtalk.FM.Domain.csproj" />
     <ProjectReference Include="..\Techtalk.FM.Infra\Techtalk.FM.Infra.csproj" />
+    <ProjectReference Include="..\Techtalk.FM.IoC\Techtalk.FM.IoC.csproj" />
   </ItemGroup>
 
 </Project>
