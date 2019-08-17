@@ -13,6 +13,8 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate
 {
     public class NHContext
     {
+        #region "  Private Properties  "
+
         private List<Type> _mappings = new List<Type>();
 
         private string _connString { get; set; }
@@ -25,7 +27,15 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate
 
         private static ISessionFactory _sessionFactory;
 
+        #endregion
+
+        #region "  Public Properties  "
+
         public List<Type> Mappings { get => _mappings; set {; } }
+
+        #endregion
+
+        #region "  Constructors  "
 
         public NHContext(string connStringName, string defaultSchema, string providerName)
         {
@@ -35,6 +45,10 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate
 
             LoadMappings();
         }
+
+        #endregion
+
+        #region "  Public Methods  "
 
         public void Add<T>() where T : class, new()
         {
@@ -73,6 +87,10 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate
             }
         }
 
+        #endregion
+
+        #region "  Private Methods  "
+
         private IPersistenceConfigurer DefineProvider()
         {
             switch (_providerName)
@@ -110,5 +128,7 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate
                     throw new ArgumentException("Unable to define database provider");
             }
         }
+
+        #endregion
     }
 }

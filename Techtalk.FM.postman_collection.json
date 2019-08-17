@@ -1,0 +1,232 @@
+{
+	"info": {
+		"_postman_id": "b8039502-5f00-4f95-8edc-0b152c20f2f8",
+		"name": "Techtalk FluentMigrator",
+		"description": "Usefull requests used on Fluent Migrator presentation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "608d9782-578f-4cbc-a944-09c1de6ded9b",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"token\", jsonData.value.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"felipe.somogyi@rakuten.com.br\",\n\t\"password\": \"12345678\"\n}"
+						},
+						"url": {
+							"raw": "{{techtalk_url}}/api/login",
+							"host": [
+								"{{techtalk_url}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						},
+						"description": "POST - api/login\n\nSend a user e-mail and password to generate an access token"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d329e232-8280-4079-a81a-fb337039e0b9",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "0a904c4d-b20d-49ce-b4a8-ad1cdd55068a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Book",
+			"item": [
+				{
+					"name": "Save Book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "608d9782-578f-4cbc-a944-09c1de6ded9b",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"The Witcher - A Torre da Andorinha\",\n\t\"subtitle\": \"A saga do bruxo Geralt de Rívia\",\n\t\"author\": \"Andrzej Sapkowski\",\n\t\"publish_date\": \"2016-08-23\",\n\t\"page_number\": \"456\",\n\t\"publishing_house\": \"WMF Martins Fontes\",\n\t\"isbn\": \"9788546900978\"\n}"
+						},
+						"url": {
+							"raw": "{{techtalk_url}}/api/book",
+							"host": [
+								"{{techtalk_url}}"
+							],
+							"path": [
+								"api",
+								"book"
+							]
+						},
+						"description": "POST - api/login\n\nSend a user e-mail and password to generate an access token"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "608d9782-578f-4cbc-a944-09c1de6ded9b",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{techtalk_url}}/api/book/:id",
+							"host": [
+								"{{techtalk_url}}"
+							],
+							"path": [
+								"api",
+								"book",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "POST - api/login\n\nSend a user e-mail and password to generate an access token"
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "608d9782-578f-4cbc-a944-09c1de6ded9b",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{techtalk_url}}/api/book/:id",
+							"host": [
+								"{{techtalk_url}}"
+							],
+							"path": [
+								"api",
+								"book",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "POST - api/login\n\nSend a user e-mail and password to generate an access token"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -19,7 +19,7 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations
         {
             switch (context.DatabaseProvider)
             {
-                case "postgres":
+                case "postgresql":
                     return runnerBuilder.AddPostgres();
                 case "sqlserver":
                     return runnerBuilder.AddSqlServer();

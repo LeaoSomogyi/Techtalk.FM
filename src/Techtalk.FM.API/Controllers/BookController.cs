@@ -35,7 +35,7 @@ namespace Techtalk.FM.API.Controllers
             return Ok(await _bookRepository.GetAsync(id));
         }
 
-        [HttpPut]
+        [HttpDelete]
         [Authorize("Bearer")]
         [Route("{id}")]
         public async Task<IActionResult> Delete(Guid id)

@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_solution items", "_solution items", "{0CF957FA-6D08-4EB8-A3AA-1B9D4703E91C}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		Techtalk.FM.postman_collection.json = Techtalk.FM.postman_collection.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7BB64CAF-F556-465A-B5F5-2EFD08BB60A3}"

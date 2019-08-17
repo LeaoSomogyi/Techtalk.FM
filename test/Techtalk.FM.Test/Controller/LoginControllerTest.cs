@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http;
@@ -38,41 +39,10 @@ namespace Techtalk.FM.Test.Controller
 
         #region "  NOk  "
 
-        [Fact]
-        public async Task Login_Email_Null_NOk()
+        [Theory]
+        [MemberData(nameof(Invalid_Users))]
+        public async Task Login_Invalid_Data_NOk(DTO.User user)
         {
-            var user = new DTO.User() { Password = "12345678" };
-
-            var response = await DoLogin(user);
-
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-        }
-
-        [Fact]
-        public async Task Login_Password_Null_NOk()
-        {
-            var user = new DTO.User() { Email = "felipe.somogyi@rakuten.com.br" };
-
-            var response = await DoLogin(user);
-
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-        }
-
-        [Fact]
-        public async Task Login_NOk()
-        {
-            var user = new DTO.User() { Email = "abobrinha@lala.com", Password = "123456" };
-
-            var response = await DoLogin(user);
-
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-        }
-
-        [Fact]
-        public async Task Login_Invalid_Email()
-        {
-            var user = new DTO.User() { Email = "lalala" };
-
             var response = await DoLogin(user);
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -92,6 +62,21 @@ namespace Techtalk.FM.Test.Controller
             var payload = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
 
             return await _fixture.HttpClient.PostAsync("api/login", payload);
+        }
+
+        #endregion
+
+        #region "  Theory  "
+
+        public static IEnumerable<object[]> Invalid_Users()
+        {
+            return new List<object[]>()
+            {
+                new object[] { new DTO.User() { Password = "12345678" } },
+                new object[] {new DTO.User() { Email = "felipe.somogyi@rakuten.com.br" } },
+                new object[] {new DTO.User() { Email = "abobrinha@lala.com", Password = "123456" } },
+                new object[] {new DTO.User() { Email = "lalala" } }
+            };
         }
 
         #endregion

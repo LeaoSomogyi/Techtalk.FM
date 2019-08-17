@@ -82,7 +82,7 @@ namespace Techtalk.FM.Domain.DTOs.Validators
 
             RuleFor(x => x.PublishDate).Must(predicate: (book, date) =>
             {
-                return date.Equals(DateTime.MinValue);
+                return !date.Equals(DateTime.MinValue);
             })
             .WithMessage("A data de publicação está em um formato inválido.")
             .WithErrorCode("400");

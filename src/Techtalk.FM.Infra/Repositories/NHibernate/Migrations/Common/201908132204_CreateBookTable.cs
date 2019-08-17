@@ -8,7 +8,6 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations.Common
         public override void Up()
         {
             Create.Table("book")
-                .WithColumn("id").AsGuid().PrimaryKey()
                 .WithColumn("title").AsString(250).NotNullable()
                 .WithColumn("subtitle").AsString(250).NotNullable()
                 .WithColumn("author").AsString(150).NotNullable()
@@ -19,6 +18,12 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations.Common
                 .WithColumn("isbn").AsString(13).Nullable()
                 .WithColumn("created_at").AsDateTime().NotNullable()
                 .WithColumn("updated_at").AsDateTime().NotNullable();
+
+            IfDatabase("SqlServer", "Postgres")
+                .Create.Column("id").OnTable("admin_user").AsGuid().PrimaryKey();
+
+            IfDatabase("Firebird")
+                .Create.Column("id").OnTable("admin_user").AsString(38).PrimaryKey();
         }
     }
 }
