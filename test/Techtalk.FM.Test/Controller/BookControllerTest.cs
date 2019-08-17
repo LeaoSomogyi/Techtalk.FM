@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -47,7 +46,7 @@ namespace Techtalk.FM.Test.Controller
         [Fact]
         public async Task Get_Book_Ok()
         {
-            var task = Record.ExceptionAsync(async () => 
+            var task = Record.ExceptionAsync(async () =>
             {
                 var book = await SaveAndReturnBook();
 
@@ -87,7 +86,20 @@ namespace Techtalk.FM.Test.Controller
 
         #region "  NOk  "
 
+        [Theory]
+        [MemberData(nameof(Invalid_Books))]
+        public async Task Book_Invalid_Data_NOk(DTO.Book book)
+        {
+            var token = await GetToken();
 
+            var client = _fixture.SetRequestAuthorization(token.AccessToken);
+
+            var payload = new StringContent(JsonConvert.SerializeObject(book, _fixture.SerializerSettings), Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("api/book", payload);
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
 
         #endregion
 
@@ -97,7 +109,7 @@ namespace Techtalk.FM.Test.Controller
         /// Get Book DTO
         /// </summary>
         /// <returns>Book DTO</returns>
-        private DTO.Book GetBook()
+        private static DTO.Book GetBook()
         {
             return new DTO.Book()
             {
@@ -169,7 +181,23 @@ namespace Techtalk.FM.Test.Controller
 
         #region "  Theory  "
 
-
+        public static IEnumerable<object[]> Invalid_Books()
+        {
+            return new List<object[]>()
+            {
+                new object[] { GetBook().Moq((b) => b.Title = null) },
+                new object[] { GetBook().Moq((b) => b.Subtitle = null) },
+                new object[] { GetBook().Moq((b) => b.Author = null) },
+                new object[] { GetBook().Moq((b) => b.PublishDate = DateTime.MinValue) },
+                new object[] { GetBook().Moq((b) => b.PageNumber = 0) },
+                new object[] { GetBook().Moq((b) => b.PublishingHouse = null) },
+                new object[] { GetBook().Moq((b) => b.ISBN = null) },
+                new object[] { GetBook().Moq((b) => b.Title = string.Empty.GenerateRandomCharacters(251)) },
+                new object[] { GetBook().Moq((b) => b.Subtitle = string.Empty.GenerateRandomCharacters(251)) },
+                new object[] { GetBook().Moq((b) => b.Author = string.Empty.GenerateRandomCharacters(151)) },
+                new object[] { GetBook().Moq((b) => b.ISBN = string.Empty.GenerateRandomCharacters(14)) }
+            };
+        }
 
         #endregion
     }

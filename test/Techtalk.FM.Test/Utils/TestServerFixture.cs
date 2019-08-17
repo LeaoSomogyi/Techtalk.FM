@@ -8,7 +8,6 @@ using System.Net.Http;
 using Techtalk.FM.API;
 using Techtalk.FM.Domain.Contracts.Repositories;
 using Techtalk.FM.Infra.Repositories.NHibernate;
-using Techtalk.FM.Infra.Repositories.NHibernate.Migrations;
 
 namespace Techtalk.FM.Test.Utils
 {

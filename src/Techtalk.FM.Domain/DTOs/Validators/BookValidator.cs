@@ -66,7 +66,7 @@ namespace Techtalk.FM.Domain.DTOs.Validators
                 .WithErrorCode("400");
 
             RuleFor(x => x.Author)
-                .MaximumLength(250)
+                .MaximumLength(150)
                 .WithMessage("O campo author deve conter no máximo 150 caracteres")
                 .WithErrorCode("400");
 

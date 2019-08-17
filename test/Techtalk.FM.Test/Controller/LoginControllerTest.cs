@@ -1,13 +1,14 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using DTO = Techtalk.FM.Domain.DTOs;
 using Techtalk.FM.Test.Utils;
 using Xunit;
-using DTO = Techtalk.FM.Domain.DTOs;
 
 namespace Techtalk.FM.Test.Controller
 {
@@ -81,9 +82,9 @@ namespace Techtalk.FM.Test.Controller
             return new List<object[]>()
             {
                 new object[] { new DTO.User() { Password = "12345678" } },
-                new object[] {new DTO.User() { Email = "felipe.somogyi@rakuten.com.br" } },
-                new object[] {new DTO.User() { Email = "abobrinha@lala.com", Password = "123456" } },
-                new object[] {new DTO.User() { Email = "lalala" } }
+                new object[] { new DTO.User() { Email = "felipe.somogyi@rakuten.com.br" } },
+                new object[] { new DTO.User() { Email = "abobrinha@lala.com", Password = "123456" } },
+                new object[] { new DTO.User() { Email = "lalala" } }
             };
         }
 
