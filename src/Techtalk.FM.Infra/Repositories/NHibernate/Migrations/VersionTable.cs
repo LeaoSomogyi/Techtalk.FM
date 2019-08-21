@@ -12,7 +12,7 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations
 
         public string SchemaName => configuration.GetSection("Provider")["DefaultSchema"];
 
-        public string TableName => "versioninfo";
+        public string TableName => "version_info";
 
         public string UniqueIndexName => "uc_version";
 
