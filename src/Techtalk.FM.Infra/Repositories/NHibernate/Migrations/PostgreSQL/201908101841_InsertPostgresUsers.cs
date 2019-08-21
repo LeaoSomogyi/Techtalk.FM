@@ -23,7 +23,7 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations.PostgreSQL
 
         public override void Down()
         {
-            Delete.FromTable("users").Row(new { email = "postgres@db.com" });
+            Delete.FromTable("admin_user").Row(new { email = "postgres@db.com" });
         }
     }
 }

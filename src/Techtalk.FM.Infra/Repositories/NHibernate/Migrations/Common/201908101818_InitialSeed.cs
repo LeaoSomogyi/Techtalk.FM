@@ -22,7 +22,7 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations
 
         public override void Down()
         {
-            Delete.FromTable("user");
+            Delete.FromTable("admin_user");
         }
     }
 }
