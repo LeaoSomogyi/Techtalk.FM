@@ -11,13 +11,11 @@ namespace Techtalk.FM.Infra.Repositories.NHibernate.Migrations.SQLServer
         {
             Create.Index("ix_admin_user_email_password").OnTable("admin_user")
                 .OnColumn("email").Ascending()
-                .OnColumn("user_password").Ascending()
-
             .WithOptions().NonClustered()
                 .Include("id")
                 .Include("name")
-                .Include("save_date")
-                .Include("update_date");
+                .Include("created_at")
+                .Include("updated_at");
         }
 
         public override void Down()
