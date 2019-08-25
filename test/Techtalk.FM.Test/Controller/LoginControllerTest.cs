@@ -1,32 +1,22 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using DTO = Techtalk.FM.Domain.DTOs;
 using Techtalk.FM.Test.Utils;
 using Xunit;
+using DTO = Techtalk.FM.Domain.DTOs;
 
 namespace Techtalk.FM.Test.Controller
 {
     [ExcludeFromCodeCoverage]
-    public class LoginControllerTest : IClassFixture<TestServerFixture>
+    public class LoginControllerTest : BaseControllerTest
     {
-        #region "  Properties  "
-
-        private readonly TestServerFixture _fixture;
-
-        #endregion
-
         #region "  Constructors  "
 
-        public LoginControllerTest(TestServerFixture fixture)
-        {
-            _fixture = fixture;
-        }
+        public LoginControllerTest(TestServerFixture fixture) : base(fixture) { }
 
         #endregion
 
@@ -68,9 +58,9 @@ namespace Techtalk.FM.Test.Controller
         /// <returns>HttpResponseMessage</returns>
         private async Task<HttpResponseMessage> DoLogin(DTO.User user)
         {
-            var payload = new StringContent(JsonConvert.SerializeObject(user, _fixture.SerializerSettings), Encoding.UTF8, "application/json");
+            var payload = new StringContent(JsonConvert.SerializeObject(user, Fixture.SerializerSettings), Encoding.UTF8, "application/json");
 
-            return await _fixture.HttpClient.PostAsync("api/login", payload);
+            return await Fixture.HttpClient.PostAsync("api/login", payload);
         }
 
         #endregion

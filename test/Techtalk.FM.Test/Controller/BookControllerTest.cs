@@ -14,20 +14,11 @@ using DTO = Techtalk.FM.Domain.DTOs;
 namespace Techtalk.FM.Test.Controller
 {
     [ExcludeFromCodeCoverage]
-    public class BookControllerTest : IClassFixture<TestServerFixture>
+    public class BookControllerTest : BaseControllerTest
     {
-        #region "  Properties  "
-
-        private readonly TestServerFixture _fixture;
-
-        #endregion
-
         #region "  Constructors  "
 
-        public BookControllerTest(TestServerFixture fixture)
-        {
-            _fixture = fixture;
-        }
+        public BookControllerTest(TestServerFixture fixture) : base(fixture) { }
 
         #endregion
 
@@ -51,7 +42,7 @@ namespace Techtalk.FM.Test.Controller
                 var book = await SaveAndReturnBook();
 
                 //Call GET - api/book/{id}
-                var response = await _fixture.HttpClient.GetAsync($"api/book/{book.Id}");
+                var response = await Fixture.HttpClient.GetAsync($"api/book/{book.Id}");
 
                 //Convert HttpContent to string
                 var content = await response.Content.ReadAsStringAsync();
@@ -59,7 +50,7 @@ namespace Techtalk.FM.Test.Controller
                 var json = JObject.Parse(content);
 
                 //After parse to json, convert do DTO Book
-                var _book = JsonConvert.DeserializeObject<DTO.Book>(json["value"].ToString(), _fixture.SerializerSettings);
+                var _book = JsonConvert.DeserializeObject<DTO.Book>(json["value"].ToString(), Fixture.SerializerSettings);
 
                 Assert.Equal(book.Id, _book.Id);
             });
@@ -75,7 +66,7 @@ namespace Techtalk.FM.Test.Controller
             var book = await SaveAndReturnBook();
 
             //Call DELETE - api/book/{id}
-            var response = await _fixture.HttpClient.DeleteAsync($"api/book/{book.Id}");
+            var response = await Fixture.HttpClient.DeleteAsync($"api/book/{book.Id}");
 
             response.EnsureSuccessStatusCode();
 
@@ -92,9 +83,9 @@ namespace Techtalk.FM.Test.Controller
         {
             var token = await GetToken();
 
-            var client = _fixture.SetRequestAuthorization(token.AccessToken);
+            var client = Fixture.SetRequestAuthorization(token.AccessToken);
 
-            var payload = new StringContent(JsonConvert.SerializeObject(book, _fixture.SerializerSettings), Encoding.UTF8, "application/json");
+            var payload = new StringContent(JsonConvert.SerializeObject(book, Fixture.SerializerSettings), Encoding.UTF8, "application/json");
 
             var response = await client.PostAsync("api/book", payload);
 
@@ -131,9 +122,9 @@ namespace Techtalk.FM.Test.Controller
         {
             var token = await GetToken();
 
-            var client = _fixture.SetRequestAuthorization(token.AccessToken);
+            var client = Fixture.SetRequestAuthorization(token.AccessToken);
 
-            var payload = new StringContent(JsonConvert.SerializeObject(GetBook(), _fixture.SerializerSettings), Encoding.UTF8, "application/json");
+            var payload = new StringContent(JsonConvert.SerializeObject(GetBook(), Fixture.SerializerSettings), Encoding.UTF8, "application/json");
 
             return await client.PostAsync("api/book", payload);
         }
@@ -155,7 +146,7 @@ namespace Techtalk.FM.Test.Controller
 
             var json = JObject.Parse(content);
 
-            return JsonConvert.DeserializeObject<DTO.Book>(json["value"].ToString(), _fixture.SerializerSettings);
+            return JsonConvert.DeserializeObject<DTO.Book>(json["value"].ToString(), Fixture.SerializerSettings);
         }
 
         /// <summary>
@@ -166,15 +157,15 @@ namespace Techtalk.FM.Test.Controller
         {
             var _user = new DTO.User() { Email = "felipe.somogyi@rakuten.com.br", Password = "12345678" };
 
-            var user = new StringContent(JsonConvert.SerializeObject(_user, _fixture.SerializerSettings), Encoding.UTF8, "application/json");
+            var user = new StringContent(JsonConvert.SerializeObject(_user, Fixture.SerializerSettings), Encoding.UTF8, "application/json");
 
-            var response = await _fixture.HttpClient.PostAsync("api/login", user);
+            var response = await Fixture.HttpClient.PostAsync("api/login", user);
 
             var content = await response.Content.ReadAsStringAsync();
 
             var json = JObject.Parse(content);
 
-            return JsonConvert.DeserializeObject<DTO.Token>(json["value"].ToString(), _fixture.SerializerSettings);
+            return JsonConvert.DeserializeObject<DTO.Token>(json["value"].ToString(), Fixture.SerializerSettings);
         }
 
         #endregion
