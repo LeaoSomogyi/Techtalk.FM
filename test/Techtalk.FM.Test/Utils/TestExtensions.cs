@@ -10,6 +10,17 @@ namespace Techtalk.FM.Test.Utils
     public static class TestExtensions
     {
         /// <summary>
+        /// Get service from Host ServiceCollection
+        /// </summary>
+        /// <typeparam name="TService">Service Required</typeparam>
+        /// <param name="server">Current host server</param>
+        /// <returns>The Service required</returns>
+        public static TService GetService<TService>(this TestServer server) where TService : class
+        {
+            return server?.Host?.Services?.GetService(typeof(TService)) as TService;
+        }
+
+        /// <summary>
         /// Moq some action in a object
         /// </summary>
         /// <typeparam name="T">Object type</typeparam>

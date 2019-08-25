@@ -6,6 +6,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Net.Http;
 using Techtalk.FM.API;
+using Techtalk.FM.Domain.Contracts.Migrations;
 using Techtalk.FM.Domain.Contracts.Repositories;
 using Techtalk.FM.Infra.Repositories.NHibernate;
 
@@ -50,8 +51,6 @@ namespace Techtalk.FM.Test.Utils
 
         public TestServerFixture()
         {
-            var configuration = ConfigurationHelper.GetIConfigurationRoot(Environment.CurrentDirectory);
-
             var builder = Program.CreateWebHostBuilder(new string[0])
                 .ConfigureTestServices((IServiceCollection services) =>
                 {
@@ -60,6 +59,11 @@ namespace Techtalk.FM.Test.Utils
                 .UseStartup<Startup>();
 
             Server = new TestServer(builder);
+
+            var migrationHelper = Server.GetService<IMigrationHelper>();
+
+            migrationHelper.RunMigrationDown();
+            migrationHelper.RunMigrationUp();
 
             HttpClient = Server.CreateClient();
         }

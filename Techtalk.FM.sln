@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_solution items", "_solution items", "{0CF957FA-6D08-4EB8-A3AA-1B9D4703E91C}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		readme.md = readme.md
 		Techtalk.FM.postman_collection.json = Techtalk.FM.postman_collection.json
 	EndProjectSection
 EndProject
@@ -25,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "console", "console", "{5D55
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Techtalk.FM.Console", "console\Techtalk.FM.Console\Techtalk.FM.Console.csproj", "{F427DFFF-3D0B-4203-83BC-76DA84A6E55E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Techtalk.FM.IoC", "src\Techtalk.FM.IoC\Techtalk.FM.IoC.csproj", "{2931F107-6269-4126-A912-798450ABB581}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Techtalk.FM.IoC", "src\Techtalk.FM.IoC\Techtalk.FM.IoC.csproj", "{2931F107-6269-4126-A912-798450ABB581}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
